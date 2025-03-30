@@ -1,7 +1,10 @@
 package es.ulpgc;
 
+import es.ulpgc.database.DatabaseManager;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        DatabaseManager.initializeDatabase();
+        System.out.println("Aplicación iniciada correctamente.");
     }
 }
