@@ -9,8 +9,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import es.ulpgc.config.ConfigLoader;
+
 public class DatabaseManager {
-    private static final String DB_PATH = "event_navigator.db";
+    private static final String DB_PATH = ConfigLoader.get("db.path");
     private static final String INIT_SCRIPT = "src/main/resources/init_db.sql";
 
     public static Connection getConnection() throws SQLException {
