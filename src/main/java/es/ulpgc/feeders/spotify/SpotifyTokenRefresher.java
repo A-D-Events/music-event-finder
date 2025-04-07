@@ -31,7 +31,6 @@ public class SpotifyTokenRefresher {
         if (conn.getResponseCode() == 200) {
             try (Scanner scanner = new Scanner(conn.getInputStream())) {
                 String response = scanner.useDelimiter("\\A").next();
-                System.out.println("Respuesta del servidor: " + response);
                 return new Gson().fromJson(response, JsonObject.class).get("access_token").getAsString();
             }
         } else {

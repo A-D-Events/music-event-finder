@@ -33,4 +33,17 @@ public class DatabaseManager {
             System.err.println("No se pudo leer el archivo de inicialización: " + e.getMessage());
         }
     }
+
+    public static boolean isDatabaseInitialized() {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            String testQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='artists';";
+            return stmt.executeQuery(testQuery).next();
+
+        } catch (SQLException e) {
+            System.err.println("Error al comprobar si la base de datos está inicializada: " + e.getMessage());
+            return false;
+        }
+    }
 }
