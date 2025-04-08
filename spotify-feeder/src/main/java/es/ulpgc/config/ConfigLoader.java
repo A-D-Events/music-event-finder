@@ -25,7 +25,7 @@ public class ConfigLoader {
 
     public static void setProperty(String key, String value) {
         properties.setProperty(key, value);
-        try (OutputStream output = new java.io.FileOutputStream("src/main/resources/config.properties")) {
+        try (OutputStream output = new java.io.FileOutputStream("spotify-feeder/src/main/resources/config.properties")) {
             properties.store(output, null);
         } catch (IOException ex) {
             System.err.println("Error saving configuration file: " + ex.getMessage());

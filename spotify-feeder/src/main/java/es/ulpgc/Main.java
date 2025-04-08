@@ -3,8 +3,8 @@ package es.ulpgc;
 import java.io.IOException;
 
 import es.ulpgc.config.ConfigLoader;
-import es.ulpgc.control.SpotifyApiClient;
-import es.ulpgc.control.SpotifyTokenRefresher;
+import es.ulpgc.control.*;
+
 import es.ulpgc.database.DatabaseManager;
 
 
@@ -46,7 +46,9 @@ public class Main {
         System.out.println("Fetching Spotify user data...");
         SpotifyApiClient spotifyApiClient = new SpotifyApiClient();
         String TopArtists = spotifyApiClient.getTopArtists().toString();
-        System.out.println("Spotify user data fetched successfully: " + TopArtists);
+        System.out.println("Spotify user data fetched successfully: ");
+        System.out.println("Parsing Spotify response and saving Spotify data to the database...");
+        SpotifyStore.saveArtistsToDatabase(SpotifyParser.parseSpotifyResponse(TopArtists).getArtists());
         System.out.println("Application finished.");
     }
 }
