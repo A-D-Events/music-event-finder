@@ -25,12 +25,12 @@ public class DatabaseManager {
 
             String sql = new String(Files.readAllBytes(Paths.get(INIT_SCRIPT)), StandardCharsets.UTF_8);
             stmt.executeUpdate(sql);
-            System.out.println("Base de datos inicializada correctamente.");
+            System.out.println("Databse succesfully initialized.");
 
         } catch (SQLException e) {
-            System.err.println("Error al inicializar la base de datos: " + e.getMessage());
+            System.err.println("Error initializing database: " + e.getMessage());
         } catch (IOException e) {
-            System.err.println("No se pudo leer el archivo de inicialización: " + e.getMessage());
+            System.err.println("Error reading initialization script: " + e.getMessage());
         }
     }
 
@@ -42,7 +42,7 @@ public class DatabaseManager {
             return stmt.executeQuery(testQuery).next();
 
         } catch (SQLException e) {
-            System.err.println("Error al comprobar si la base de datos está inicializada: " + e.getMessage());
+            System.err.println("Error checking for an existing database: " + e.getMessage());
             return false;
         }
     }

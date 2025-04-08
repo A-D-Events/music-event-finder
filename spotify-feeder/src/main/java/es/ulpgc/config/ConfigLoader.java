@@ -11,11 +11,11 @@ public class ConfigLoader {
     static {
         try (InputStream input = ConfigLoader.class.getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
-                throw new IllegalStateException("No se encontró el archivo de configuración.");
+                throw new IllegalStateException("Configuration file not found.");
             }
             properties.load(input);
         } catch (IOException ex) {
-            System.err.println("Error al cargar el archivo de configuración: " + ex.getMessage());
+            System.err.println("Error loading configuration file: " + ex.getMessage());
         }
     }
 
@@ -28,7 +28,7 @@ public class ConfigLoader {
         try (OutputStream output = new java.io.FileOutputStream("src/main/resources/config.properties")) {
             properties.store(output, null);
         } catch (IOException ex) {
-            System.err.println("Error al guardar el archivo de configuración: " + ex.getMessage());
+            System.err.println("Error saving configuration file: " + ex.getMessage());
         }
     }
 }

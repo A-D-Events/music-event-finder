@@ -34,7 +34,7 @@ public class SpotifyTokenRefresher {
                 return new Gson().fromJson(response, JsonObject.class).get("access_token").getAsString();
             }
         } else {
-            throw new IOException("Error al renovar el token: " + conn.getResponseCode());
+            throw new IOException("Error refreshing token: " + conn.getResponseCode());
         }
     }
 }

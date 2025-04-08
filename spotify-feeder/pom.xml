@@ -6,12 +6,12 @@
     <parent>
           <groupId>es.ulpgc</groupId>
           <artifactId>music-event-finder</artifactId>
-          <version>0.3.3</version>
+          <version>0.3.4</version>
     </parent>
 
     <groupId>es.ulpgc</groupId>
     <artifactId>spotify-feeder</artifactId>
-    <version>0.3.3</version>
+    <version>0.3.4</version>
 
     <dependencies>
         <dependency>

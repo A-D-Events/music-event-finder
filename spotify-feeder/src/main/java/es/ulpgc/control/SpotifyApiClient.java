@@ -22,7 +22,7 @@ public class SpotifyApiClient {
     public SpotifyApiClient() {
         this.accessToken = ConfigLoader.get("spotify.access.token");
         if (this.accessToken == null || this.accessToken.isEmpty()) {
-            throw new IllegalArgumentException("El token de acceso no puede ser nulo o vacío.");
+            throw new IllegalArgumentException("Access token is a null or is empty.");
         }
         this.gson = new Gson();
     }
@@ -43,7 +43,7 @@ public class SpotifyApiClient {
                 return gson.fromJson(reader, JsonObject.class);
             }
         } else {
-            throw new IOException("Error en la solicitud: " + conn.getResponseCode());
+            throw new IOException("Request error: " + conn.getResponseCode());
         }
     }
 }
