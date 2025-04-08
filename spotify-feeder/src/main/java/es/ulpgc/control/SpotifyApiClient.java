@@ -1,4 +1,4 @@
-package es.ulpgc.spotify;
+package es.ulpgc.control;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

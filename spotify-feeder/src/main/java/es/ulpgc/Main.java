@@ -3,9 +3,9 @@ package es.ulpgc;
 import java.io.IOException;
 
 import es.ulpgc.config.ConfigLoader;
+import es.ulpgc.control.SpotifyApiClient;
+import es.ulpgc.control.SpotifyTokenRefresher;
 import es.ulpgc.database.DatabaseManager;
-import es.ulpgc.spotify.SpotifyApiClient;
-import es.ulpgc.spotify.SpotifyTokenRefresher;
 
 
 public class Main {
