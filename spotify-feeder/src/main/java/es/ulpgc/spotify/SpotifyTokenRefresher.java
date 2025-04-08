@@ -1,4 +1,4 @@
-package es.ulpgc.feeders.spotify;
+package es.ulpgc.spotify;
 
 import java.io.IOException;
 import java.io.OutputStream;
