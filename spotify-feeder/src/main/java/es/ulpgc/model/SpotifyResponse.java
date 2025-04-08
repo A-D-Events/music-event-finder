@@ -66,4 +66,8 @@ public class SpotifyResponse {
     public void setItems(List<Artist> items) {
         this.items = items;
     }
+
+    public List<Artist> getArtists() {
+        return items;
+    }
 }
