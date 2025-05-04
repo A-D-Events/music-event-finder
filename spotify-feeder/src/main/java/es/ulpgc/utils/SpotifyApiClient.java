@@ -1,4 +1,4 @@
-package es.ulpgc.control;
+package es.ulpgc.utils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,16 +34,16 @@ public class SpotifyApiClient {
 
     private JsonObject sendGetRequest(String endpoint) throws IOException {
         URL url = URI.create(endpoint).toURL();
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Authorization", "Bearer " + accessToken);
 
-        if (conn.getResponseCode() == 200) {
-            try (InputStreamReader reader = new InputStreamReader(conn.getInputStream())) {
+        if (connection.getResponseCode() == 200) {
+            try (InputStreamReader reader = new InputStreamReader(connection.getInputStream())) {
                 return gson.fromJson(reader, JsonObject.class);
             }
         } else {
-            throw new IOException("Request error: " + conn.getResponseCode());
+            throw new IOException("Request error: " + connection.getResponseCode());
         }
     }
 }

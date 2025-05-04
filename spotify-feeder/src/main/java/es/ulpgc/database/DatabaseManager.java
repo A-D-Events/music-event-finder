@@ -20,11 +20,11 @@ public class DatabaseManager {
     }
 
     public static void initializeDatabase() {
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
 
             String sql = new String(Files.readAllBytes(Paths.get(INIT_SCRIPT)), StandardCharsets.UTF_8);
-            stmt.executeUpdate(sql);
+            statement.executeUpdate(sql);
             System.out.println("Databse succesfully initialized.");
 
         } catch (SQLException e) {
@@ -35,11 +35,11 @@ public class DatabaseManager {
     }
 
     public static boolean isDatabaseInitialized() {
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
 
             String testQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='artists';";
-            return stmt.executeQuery(testQuery).next();
+            return statement.executeQuery(testQuery).next();
 
         } catch (SQLException e) {
             System.err.println("Error checking for an existing database: " + e.getMessage());

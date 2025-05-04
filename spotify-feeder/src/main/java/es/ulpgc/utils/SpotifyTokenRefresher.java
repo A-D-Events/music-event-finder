@@ -1,4 +1,4 @@
-package es.ulpgc.control;
+package es.ulpgc.utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,22 +19,22 @@ public class SpotifyTokenRefresher {
                             "&client_secret=" + ConfigLoader.get("spotify.client.secret");
 
         URL url = URI.create(ConfigLoader.get("spotify.api.token.endpoint")).toURL();
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-        try (OutputStream os = conn.getOutputStream()) {
+        try (OutputStream os = connection.getOutputStream()) {
             os.write(parameters.getBytes());
         }
 
-        if (conn.getResponseCode() == 200) {
-            try (Scanner scanner = new Scanner(conn.getInputStream())) {
+        if (connection.getResponseCode() == 200) {
+            try (Scanner scanner = new Scanner(connection.getInputStream())) {
                 String response = scanner.useDelimiter("\\A").next();
                 return new Gson().fromJson(response, JsonObject.class).get("access_token").getAsString();
             }
         } else {
-            throw new IOException("Error refreshing token: " + conn.getResponseCode());
+            throw new IOException("Error refreshing token: " + connection.getResponseCode());
         }
     }
 }

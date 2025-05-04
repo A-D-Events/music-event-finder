@@ -6,7 +6,7 @@
     <parent>
           <groupId>es.ulpgc</groupId>
           <artifactId>music-event-finder</artifactId>
-          <version>0.3.4</version>
+          <version>0.3.5</version>
     </parent>
 
     <groupId>es.ulpgc</groupId>

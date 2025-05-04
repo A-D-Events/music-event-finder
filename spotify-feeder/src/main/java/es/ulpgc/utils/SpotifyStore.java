@@ -1,4 +1,4 @@
-package es.ulpgc.control;
+package es.ulpgc.utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
