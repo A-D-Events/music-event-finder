@@ -11,7 +11,7 @@ import es.ulpgc.model.Artist;
 public class SpotifyStore {
 
     public static void saveArtistsToDatabase(List<Artist> artists) {
-        String insertArtistQuery = "INSERT INTO artists (id, name, popularity, type, uri, href, genres, followers, image_url) " +
+        String insertArtistQuery = "INSERT OR REPLACE INTO artists (id, name, popularity, type, uri, href, genres, followers, image_url) " +
                                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseManager.getConnection();
@@ -32,10 +32,10 @@ public class SpotifyStore {
             }
 
             preparedStatement.executeBatch();
-            System.out.println("Artistas guardados en la base de datos correctamente.");
+            System.out.println("Artist saved successfully to the database.");
 
         } catch (SQLException e) {
-            System.err.println("Error al guardar los artistas en la base de datos: " + e.getMessage());
+            System.err.println("Error saving artist to the database: " + e.getMessage());
         }
     }
 }

@@ -12,15 +12,15 @@ import com.google.gson.JsonObject;
 import es.ulpgc.config.ConfigLoader;
 
 public class SpotifyApiClient {
-    private static final String BASE_URL = ConfigLoader.get("spotify.api.url");
-    private static final String ENDPOINT = ConfigLoader.get("spotify.api.endpoint");
-    private static final String PARAMETERS = ConfigLoader.get("spotify.api.parameters");
+    private static final String BASE_URL = ConfigLoader.getProperty("spotify.api.url");
+    private static final String ENDPOINT = ConfigLoader.getProperty("spotify.api.endpoint");
+    private static final String PARAMETERS = ConfigLoader.getProperty("spotify.api.parameters");
 
     private final String accessToken;
     private final Gson gson;
 
     public SpotifyApiClient() {
-        this.accessToken = ConfigLoader.get("spotify.access.token");
+        this.accessToken = ConfigLoader.getProperty("spotify.access.token");
         if (this.accessToken == null || this.accessToken.isEmpty()) {
             throw new IllegalArgumentException("Access token is a null or is empty.");
         }

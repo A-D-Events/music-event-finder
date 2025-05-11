@@ -14,11 +14,11 @@ import es.ulpgc.config.ConfigLoader;
 
 public class SpotifyTokenRefresher {
     public static String refreshAccessToken() throws IOException {
-        String parameters = "grant_type=refresh_token&refresh_token=" + ConfigLoader.get("spotify.refresh.token") +
-                            "&client_id=" + ConfigLoader.get("spotify.client.id") +
-                            "&client_secret=" + ConfigLoader.get("spotify.client.secret");
+        String parameters = "grant_type=refresh_token&refresh_token=" + ConfigLoader.getProperty("spotify.refresh.token") +
+                            "&client_id=" + ConfigLoader.getProperty("spotify.client.id") +
+                            "&client_secret=" + ConfigLoader.getProperty("spotify.client.secret");
 
-        URL url = URI.create(ConfigLoader.get("spotify.api.token.endpoint")).toURL();
+        URL url = URI.create(ConfigLoader.getProperty("spotify.api.token.endpoint")).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);

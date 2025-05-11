@@ -12,7 +12,7 @@ import java.sql.Statement;
 import es.ulpgc.config.ConfigLoader;
 
 public class DatabaseManager {
-    private static final String DB_PATH = ConfigLoader.get("db.path");
+    private static final String DB_PATH = ConfigLoader.getProperty("db.path");
     private static final String INIT_SCRIPT = "spotify-feeder/src/main/resources/init_db.sql";
 
     public static Connection getConnection() throws SQLException {

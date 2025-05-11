@@ -19,7 +19,7 @@ public class ConfigLoader {
         }
     }
 
-    public static String get(String key) {
+    public static String getProperty(String key) {
         return properties.getProperty(key);
     }
 
@@ -27,8 +27,8 @@ public class ConfigLoader {
         properties.setProperty(key, value);
         try (OutputStream output = new java.io.FileOutputStream("spotify-feeder/src/main/resources/config.properties")) {
             properties.store(output, null);
-        } catch (IOException ex) {
-            System.err.println("Error saving configuration file: " + ex.getMessage());
+        } catch (IOException exception) {
+            System.err.println("Error saving configuration file: " + exception.getMessage());
         }
     }
 }
