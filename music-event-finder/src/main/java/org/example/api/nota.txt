@@ -1,0 +1,19 @@
+1. ✅ Si es una mejora en cómo se llama la API
+Ej: cambiar filtros, añadir paginación, usar otro endpoint de Ticketmaster...
+📌 Modifica: TicketmasterClient.java
+🎯 Aquí defines la URL, los parámetros y cómo haces la conexión HTTP.
+
+2. ✅ Si es una mejora en cómo procesas la respuesta de la API
+Ej: sacar más datos, adaptar nuevos formatos de JSON...
+📌 Modifica: EventParser.java
+🎯 Aquí transformas el JSON en objetos Event.
+
+3. ✅ Si quieres añadir una lógica completa nueva que combine lo anterior
+Ej: una búsqueda por país + fecha, o por artista y precio...
+📌 Modifica: EventService.java
+🎯 Es el punto de entrada a la lógica de negocio y orquesta todo: llamadas al cliente, parser y guardado.
+
+4. ✅ Si cambias el modelo de datos
+Ej: el Event ahora tiene un campo organizer, o ticketCount...
+📌 Modifica: Event.java
+🎯 También necesitarás actualizar EventParser y EventDAO.
