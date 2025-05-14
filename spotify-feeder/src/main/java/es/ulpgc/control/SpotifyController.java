@@ -2,11 +2,13 @@ package es.ulpgc.control;
 
 import java.io.IOException;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import es.ulpgc.config.ConfigLoader;
 import es.ulpgc.database.DatabaseManager;
 import es.ulpgc.model.SpotifyResponse;
+import es.ulpgc.utils.EventPublisher;
 import es.ulpgc.utils.SpotifyApiClient;
 import es.ulpgc.utils.SpotifyParser;
 import es.ulpgc.utils.SpotifyStore;
@@ -90,6 +92,11 @@ public class SpotifyController {
             if (spotifyResponse != null) {
                 SpotifyStore.saveArtistsToDatabase(spotifyResponse.getArtists());
                 System.out.println("Artists stored in the database successfully.");
+
+                spotifyResponse.getArtists().forEach(artist -> {
+                    String eventJson = new Gson().toJson(artist);
+                    EventPublisher.publishEvent(eventJson);
+            });
             } else {
                 System.err.println("Error storing artists in the database.");
             }
