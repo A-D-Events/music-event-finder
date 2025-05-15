@@ -19,6 +19,18 @@
             <artifactId>activemq-all</artifactId>
             <version>5.15.12</version>
         </dependency>
+
+        <dependency>
+            <groupId>es.ulpgc</groupId>
+            <artifactId>spotify-feeder</artifactId>
+            <version>0.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.20</version>
+        </dependency>
     </dependencies>
     
 

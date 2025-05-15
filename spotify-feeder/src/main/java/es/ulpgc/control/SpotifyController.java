@@ -2,12 +2,13 @@ package es.ulpgc.control;
 
 import java.io.IOException;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import es.ulpgc.config.ConfigLoader;
 import es.ulpgc.database.DatabaseManager;
+import es.ulpgc.model.ArtistEvent;
 import es.ulpgc.model.SpotifyResponse;
+import es.ulpgc.utils.ArtistEventCreator;
 import es.ulpgc.utils.EventPublisher;
 import es.ulpgc.utils.SpotifyApiClient;
 import es.ulpgc.utils.SpotifyParser;
@@ -86,7 +87,7 @@ public class SpotifyController {
         }
     }
 
-    public static void updateApi(){
+    public static void updateApi() {
         try {
             SpotifyResponse spotifyResponse = apiParser();
             if (spotifyResponse != null) {
@@ -94,9 +95,16 @@ public class SpotifyController {
                 System.out.println("Artists stored in the database successfully.");
 
                 spotifyResponse.getArtists().forEach(artist -> {
-                    String eventJson = new Gson().toJson(artist);
-                    EventPublisher.publishEvent(eventJson);
-            });
+                    ArtistEvent event = ArtistEventCreator.fromArtist(artist, "spotify-feeder");
+
+                    String eventJson = event.toJson();
+
+                    if (eventJson != null) {
+                        EventPublisher.publishEvent(eventJson);
+                    } else {
+                        System.err.println("Failed to serialize ArtistEvent to JSON for artist: " + artist.getName());
+                    }
+                });
             } else {
                 System.err.println("Error storing artists in the database.");
             }
