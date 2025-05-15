@@ -11,7 +11,7 @@ import javax.jms.Topic;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 public class EventPublisher {
-    private static final String BROKER_URL = "http://localhost:8161";
+    private static final String BROKER_URL = "tcp://localhost:61616";
     private static final String TOPIC_NAME = "spotify-events";
 
     public static void publishEvent(String eventJson) {
