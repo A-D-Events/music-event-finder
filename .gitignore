@@ -1,0 +1,49 @@
+# ==== Maven / Java build outputs (do not commit) ====
+target/
+**/target/
+bin/
+**/bin/
+# Compiled classes & packaged artifacts
+*.class
+*.jar
+!/.mvn/wrapper/maven-wrapper.jar
+*.war
+*.ear
+
+# Logs / dumps
+*.log
+hs_err_pid*
+*.hprof
+
+# ==== IDE / Tool metadata ====
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+.vscode/
+.gradle/
+
+# ==== OS / Misc ====
+.DS_Store
+Thumbs.db
+
+# ==== Local databases / generated data ====
+*.db
+
+# ==== (Optional) Event store raw dumps ====
+# Uncomment if you don't want to version daily event snapshots
+# eventstore/**/*.events
+
+# ==== Temporary files ====
+*.tmp
+*.swp
+*.swo
+~$*
+
+# ==== Archives ====
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
