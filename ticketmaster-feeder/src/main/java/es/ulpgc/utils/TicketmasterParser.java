@@ -254,6 +254,4 @@ public class TicketmasterParser {
         JsonElement el = obj.get(member);
         return el != null && !el.isJsonNull() ? el.getAsString() : null;
     }
-
-    // Removed emptyResponse; returning null when no valid events
 }
