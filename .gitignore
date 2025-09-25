@@ -31,10 +31,6 @@ Thumbs.db
 # ==== Local databases / generated data ====
 *.db
 
-# ==== (Optional) Event store raw dumps ====
-# Uncomment if you don't want to version daily event snapshots
-# eventstore/**/*.events
-
 # ==== Temporary files ====
 *.tmp
 *.swp
