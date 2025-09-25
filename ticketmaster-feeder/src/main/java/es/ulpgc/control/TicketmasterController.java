@@ -55,8 +55,8 @@ public class TicketmasterController {
                 }
             }
             System.out.println("Spotify events processing completed.");
-        } catch (IOException e) {
-            System.err.println("Error processing event files: " + e.getMessage());
+        } catch (IOException exception) {
+            System.err.println("Error processing event files: " + exception.getMessage());
         }
     }
 }

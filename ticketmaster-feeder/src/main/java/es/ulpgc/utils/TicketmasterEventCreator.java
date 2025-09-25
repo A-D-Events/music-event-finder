@@ -8,14 +8,14 @@ import es.ulpgc.model.TicketmasterResponse;
 public class TicketmasterEventCreator {
     public static TicketmasterEvent fromResponse(TicketmasterResponse response, String sourceSystem) {
         return new TicketmasterEvent(
-                LocalDateTime.now(), // Timestamp actual
-                sourceSystem,        // Sistema origen (ej: "ticketmaster-feeder")
-                response.link,       // id (puedes cambiarlo si tienes un campo id específico)
+                LocalDateTime.now(),
+                sourceSystem,
+                response.id,
                 response.name,
-                response.link,       // url
+                response.url,
                 response.date,
                 response.venue,
-                response.address     // city (ajusta aquí si tu modelo cambia)
+                response.address
         );
     }
 }

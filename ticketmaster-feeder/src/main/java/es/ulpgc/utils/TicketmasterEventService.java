@@ -18,28 +18,28 @@ public class TicketmasterEventService {
         String normalized = keyword.trim().toLowerCase();
         if (!issuedKeywords.add(normalized)) return;
 
-    String requestParameters = TicketmasterParamsBuilder.build(keyword, 20, 0, null, null);
-    System.out.println("[TM] Params for '" + keyword + "': " + requestParameters);
+    String requestParameters = TicketmasterParamsBuilder.build(keyword);
+    System.out.println("[TicketMaster] Parameters for '" + keyword + "': " + requestParameters);
 
         TicketmasterApiClient apiClient = new TicketmasterApiClient();
         JsonObject apiResponse;
         try {
             apiResponse = apiClient.getEvents(requestParameters);
-        } catch (IOException io) {
-            System.err.println("API request failed for keyword '" + keyword + "': " + io.getMessage());
+        } catch (IOException ioexception) {
+            System.err.println("API request failed for keyword '" + keyword + "': " + ioexception.getMessage());
             return;
         }
 
         List<TicketmasterResponse> ticketmasterResponses = TicketmasterParser.parseTicketmasterResponses(apiResponse.toString());
         if (ticketmasterResponses == null || ticketmasterResponses.isEmpty()) {
-            System.out.println("[TM] No events for keyword: " + keyword);
+            System.out.println("[TicketMaster] No events for keyword: " + keyword);
             return;
         }
         int publishedCount = 0;
         for (TicketmasterResponse response : ticketmasterResponses) {
             String deduplicationKey = buildDeduplicationKey(response);
             if (!publishedEventKeys.add(deduplicationKey)) continue;
-            System.out.println("[TM] Parsed -> name=" + response.name + ", link=" + response.link + ", venue=" + response.venue + ", date=" + response.date + ", city=" + response.address);
+            System.out.println("[TicketMaster] Parsed -> id=" + response.id + ", name=" + response.name + ", url=" + response.url + ", venue=" + response.venue + ", date=" + response.date + ", city=" + response.address);
             TicketmasterEvent event = TicketmasterEventCreator.fromResponse(response, sourceSystem);
             String eventJson = event.toJson();
             if (eventJson != null) {
@@ -47,15 +47,23 @@ public class TicketmasterEventService {
                 publishedCount++;
             }
         }
-        System.out.println("[TM] Published " + publishedCount + " events for keyword: " + keyword);
+        System.out.println("[TicketMaster] Published " + publishedCount + " events for keyword: " + keyword);
     }
 
     private static String buildDeduplicationKey(TicketmasterResponse response) {
-        String link = response.link != null ? response.link.trim().toLowerCase() : null;
-        if (link != null && !link.isBlank()) return "url:" + link;
-        String normalizedName = response.name != null ? response.name.trim().toLowerCase() : "";
-        String normalizedDate = response.date != null ? response.date.trim().toLowerCase() : "";
-        String normalizedVenue = response.venue != null ? response.venue.trim().toLowerCase() : "";
-        return String.join("|", "name-date-venue", normalizedName, normalizedDate, normalizedVenue);
+
+        if (response.id != null && !response.id.isBlank()) {
+            return "id:" + response.id.trim().toLowerCase();
+        }
+        
+        if (response.url != null && !response.url.isBlank()) {
+            return "url:" + response.url.trim().toLowerCase();
+        }
+
+        String name = response.name != null ? response.name.trim().toLowerCase() : "";
+        String date = response.date != null ? response.date.trim().toLowerCase() : "";
+        String venue = response.venue != null ? response.venue.trim().toLowerCase() : "";
+
+        return String.format("name-date-venue|%s|%s|%s", name, date, venue);
     }
 }

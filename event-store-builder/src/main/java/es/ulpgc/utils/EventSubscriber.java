@@ -39,7 +39,6 @@ public class EventSubscriber {
 
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            // Suscriptor para spotify-events
             Topic topicSpotify = session.createTopic(TOPIC_NAME);
             MessageConsumer consumerSpotify = session.createDurableSubscriber(topicSpotify, "event-store-subscriber-spotify");
             consumerSpotify.setMessageListener(message -> {
@@ -60,7 +59,6 @@ public class EventSubscriber {
                 }
             });
 
-            // Suscriptor para ticketmaster-events
             Topic topicTM = session.createTopic(TOPIC_NAME_TM);
             MessageConsumer consumerTM = session.createDurableSubscriber(topicTM, "event-store-subscriber-ticketmaster");
             consumerTM.setMessageListener(message -> {

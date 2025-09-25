@@ -20,13 +20,7 @@ public class ConfigLoader {
     }
 
     public static String getProperty(String key) {
-        String value = properties.getProperty(key);
-        if (value == null) return null;
-        value = value.trim();
-        if (value.length() >= 2 && ((value.startsWith("\"") && value.endsWith("\"")) || (value.startsWith("'") && value.endsWith("'")))) {
-            return value.substring(1, value.length() - 1);
-        }
-        return value;
+        return properties.getProperty(key);
     }
 
     public static void setProperty(String key, String value) {
