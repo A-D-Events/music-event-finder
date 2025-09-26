@@ -12,8 +12,8 @@ public class ArtistEventCreator {
                 : null;
 
         return new ArtistEvent(
-                LocalDateTime.now(), // Current timestamp
-                sourceSystem,        // Source system (e.g., "spotify-feeder")
+                LocalDateTime.now(),
+                sourceSystem,
                 artist.getId(),
                 artist.getName(),
                 artist.getPopularity(),

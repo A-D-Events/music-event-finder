@@ -7,18 +7,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class TicketmasterEvent {
-    private LocalDateTime ts; // Timestamp del evento
-    private String ss;        // Source system (ej: "ticketmaster-feeder")
+    private LocalDateTime ts;
+    private String ss;
     private String id;
     private String name;
     private String url;
     private String date;
     private String venue;
     private String city;
-
-    public TicketmasterEvent() {
-        // Constructor vacío necesario para deserialización
-    }
 
     public TicketmasterEvent(LocalDateTime ts, String ss, String id, String name, String url, String date,
                              String venue, String city) {
@@ -32,7 +28,6 @@ public class TicketmasterEvent {
         this.city = city;
     }
 
-    // Serializa el evento a JSON
     public String toJson() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -44,7 +39,6 @@ public class TicketmasterEvent {
         }
     }
 
-    // Deserializa JSON a un TicketmasterEvent
     public static TicketmasterEvent deserialize(String eventJson) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -56,7 +50,6 @@ public class TicketmasterEvent {
         }
     }
 
-    // Getters y setters
     public LocalDateTime getTs() { return ts; }
     public void setTs(LocalDateTime ts) { this.ts = ts; }
 
