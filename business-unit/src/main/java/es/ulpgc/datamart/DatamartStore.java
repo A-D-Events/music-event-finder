@@ -1,23 +1,19 @@
-package es.ulpgc.utils;
+package es.ulpgc.datamart;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
-import es.ulpgc.database.DatabaseManager;
 import es.ulpgc.model.Artist;
 
-public class SpotifyStore {
+public class DatamartStore {
 
-    public static void saveArtistsToDatabase(List<Artist> artists) {
+    public static void saveArtistToDatamart(Artist artist) {
         String insertArtistQuery = "INSERT OR REPLACE INTO artists (id, name, popularity, type, uri, href, genres, followers, image_url) " +
                                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = DatabaseManager.getConnection();
+        try (Connection connection = DatamartInitializer.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertArtistQuery)) {
-
-            for (Artist artist : artists) {
                 preparedStatement.setString(1, artist.getId());
                 preparedStatement.setString(2, artist.getName());
                 preparedStatement.setInt(3, artist.getPopularity());
@@ -29,13 +25,13 @@ public class SpotifyStore {
                 preparedStatement.setString(9, artist.getImages().isEmpty() ? null : artist.getImages().get(0).getUrl());
 
                 preparedStatement.addBatch();
-            }
+            
 
             preparedStatement.executeBatch();
             System.out.println("Artist saved successfully to the database.");
 
-        } catch (SQLException e) {
-            System.err.println("Error saving artist to the database: " + e.getMessage());
+        } catch (SQLException exception) {
+            System.err.println("Error saving artist to the database: " + exception.getMessage());
         }
     }
 }

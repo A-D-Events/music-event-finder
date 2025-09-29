@@ -10,8 +10,6 @@ import es.ulpgc.control.SpotifyController;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        SpotifyController.initialize();
-
         System.out.println("Please enter your Spotify refresh token:");
         String refreshToken;
         try (Scanner scanner = new Scanner(System.in)) {

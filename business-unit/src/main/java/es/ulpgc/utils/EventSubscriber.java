@@ -1,12 +1,11 @@
 package es.ulpgc.utils;
 
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -25,7 +24,6 @@ public class EventSubscriber {
     private static final String BROKER_URL = "tcp://localhost:61616";
     private static final String TOPIC_NAME = "spotify-events";
     private static final String TOPIC_NAME_TM = "ticketmaster-events";
-    private static final String EVENT_STORE_DIR = "eventstore";
 
     public static void subscribe() {
         Connection connection;
@@ -34,13 +32,13 @@ public class EventSubscriber {
         try {
             ConnectionFactory factory = new ActiveMQConnectionFactory(BROKER_URL);
             connection = factory.createConnection();
-            connection.setClientID("event-store-builder");
+            connection.setClientID("business-unit");
             connection.start();
 
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             Topic topicSpotify = session.createTopic(TOPIC_NAME);
-            MessageConsumer consumerSpotify = session.createDurableSubscriber(topicSpotify, "event-store-subscriber-spotify");
+            MessageConsumer consumerSpotify = session.createDurableSubscriber(topicSpotify, "business-unit-subscriber-spotify");
             consumerSpotify.setMessageListener(message -> {
                 if (message instanceof TextMessage textMessage) {
                     try {
@@ -60,7 +58,7 @@ public class EventSubscriber {
             });
 
             Topic topicTM = session.createTopic(TOPIC_NAME_TM);
-            MessageConsumer consumerTM = session.createDurableSubscriber(topicTM, "event-store-subscriber-ticketmaster");
+            MessageConsumer consumerTM = session.createDurableSubscriber(topicTM, "business-unit-subscriber-ticketmaster");
             consumerTM.setMessageListener(message -> {
                 if (message instanceof TextMessage textMessage) {
                     try {
@@ -85,22 +83,18 @@ public class EventSubscriber {
         }
     }
 
-    private static void storeArtistEvent(ArtistEvent event) {
+private static void storeArtistEvent(ArtistEvent event) {
         try {
-            LocalDate date = event.getTs().toLocalDate();
-            String formattedDate = date.format(DateTimeFormatter.BASIC_ISO_DATE);
+            String DB_PATH = "event_datamart.db";
 
-            String topicDir = EVENT_STORE_DIR + "/" + TOPIC_NAME;
-            String filePath = topicDir + "/" + event.getSs() + "/" + formattedDate + ".events";
+            Files.createDirectories(Paths.get(DB_PATH));
 
-            Files.createDirectories(Paths.get(topicDir + "/" + event.getSs()));
-
-            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(DB_PATH), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
                 writer.write(event.toJson());
                 writer.newLine();
             }
 
-            System.out.println("ArtistEvent stored: " + filePath);
+            System.out.println("ArtistEvent stored: " + DB_PATH);
         } catch (IOException exception) {
             System.err.println("Error storing ArtistEvent: " + exception.getMessage());
         }
@@ -108,22 +102,18 @@ public class EventSubscriber {
 
     private static void storeTicketmasterEvent(TicketmasterEvent event) {
         try {
-            LocalDate date = event.getTs().toLocalDate();
-            String formattedDate = date.format(DateTimeFormatter.BASIC_ISO_DATE);
+            String DB_PATH = "event_datamart.db";
 
-            String topicDir = EVENT_STORE_DIR + "/" + TOPIC_NAME_TM;
-            String filePath = topicDir + "/" + event.getSs() + "/" + formattedDate + ".events";
+            Files.createDirectories(Paths.get(DB_PATH));
 
-            Files.createDirectories(Paths.get(topicDir + "/" + event.getSs()));
-
-            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(DB_PATH), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
                 writer.write(event.toJson());
                 writer.newLine();
             }
 
-            System.out.println("TicketmasterEvent stored: " + filePath);
+            System.out.println("ArtistEvent stored: " + DB_PATH);
         } catch (IOException exception) {
-            System.err.println("Error storing TicketmasterEvent: " + exception.getMessage());
+            System.err.println("Error storing ArtistEvent: " + exception.getMessage());
         }
     }
 }

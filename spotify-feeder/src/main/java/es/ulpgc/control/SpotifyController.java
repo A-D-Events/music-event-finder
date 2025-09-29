@@ -5,27 +5,15 @@ import java.io.IOException;
 import com.google.gson.JsonObject;
 
 import es.ulpgc.config.ConfigLoader;
-import es.ulpgc.database.DatabaseManager;
 import es.ulpgc.model.ArtistEvent;
 import es.ulpgc.model.SpotifyResponse;
 import es.ulpgc.utils.ArtistEventCreator;
 import es.ulpgc.utils.EventPublisher;
 import es.ulpgc.utils.SpotifyApiClient;
 import es.ulpgc.utils.SpotifyParser;
-import es.ulpgc.utils.SpotifyStore;
 import es.ulpgc.utils.SpotifyTokenRefresher;
 
 public class SpotifyController {
-
-    public static void initialize(){
-        System.out.println("Checking if database is initialized...");
-        if (!DatabaseManager.isDatabaseInitialized()){
-            DatabaseManager.initializeDatabase();
-            System.out.println("Database initialized successfully.");
-        } else {
-           System.out.println("Database already initialized.");
-        }
-    }
     
     public static void addToken(String token){
         ConfigLoader.setProperty("spotify.refresh.token", token);
@@ -91,8 +79,6 @@ public class SpotifyController {
         try {
             SpotifyResponse spotifyResponse = apiParser();
             if (spotifyResponse != null) {
-                SpotifyStore.saveArtistsToDatabase(spotifyResponse.getArtists());
-                System.out.println("Artists stored in the database successfully.");
 
                 spotifyResponse.getArtists().forEach(artist -> {
                     ArtistEvent event = ArtistEventCreator.fromArtist(artist, "spotify-feeder");
@@ -105,8 +91,6 @@ public class SpotifyController {
                         System.err.println("Failed to serialize ArtistEvent to JSON for artist: " + artist.getName());
                     }
                 });
-            } else {
-                System.err.println("Error storing artists in the database.");
             }
         } catch (Exception exception) {
             System.err.println("Error storing data: " + exception.getMessage());
