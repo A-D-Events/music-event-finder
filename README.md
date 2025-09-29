@@ -18,7 +18,8 @@ Se ha elegido una estructura SQLite para el datamart debido a la simplicidad, re
 ## 3. Compilación y ejecución
 Requisitos: 
 - Java 21.
-- Maven 3.9+, ActiveMQ en ejecución (https://activemq.apache.org/components/classic/documentation/getting-started)
+- Maven 3.9+
+- ActiveMQ en ejecución (https://activemq.apache.org/components/classic/documentation/getting-started)
 - API key de TicketMaster (https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2)
 - API key de usuario de Spotify (https://developer.spotify.com/documentation/web-api)
 
