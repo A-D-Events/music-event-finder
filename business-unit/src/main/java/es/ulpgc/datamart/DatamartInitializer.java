@@ -18,7 +18,7 @@ public class DatamartInitializer {
         return DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
     }
 
-    public static void initializeDatabase() {
+    public static void initializeDatamart() {
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement()) {
 

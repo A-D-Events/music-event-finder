@@ -15,9 +15,13 @@ public class TicketmasterEvent {
     private String date;
     private String venue;
     private String city;
+    private String image;
+
+    public TicketmasterEvent() {
+    }
 
     public TicketmasterEvent(LocalDateTime ts, String ss, String id, String name, String url, String date,
-                             String venue, String city) {
+                             String venue, String city, String image) {
         this.ts = ts;
         this.ss = ss;
         this.id = id;
@@ -26,6 +30,7 @@ public class TicketmasterEvent {
         this.date = date;
         this.venue = venue;
         this.city = city;
+        this.image = image;
     }
 
     public String toJson() {
@@ -33,8 +38,8 @@ public class TicketmasterEvent {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.registerModule(new JavaTimeModule());
             return objectMapper.writeValueAsString(this);
-        } catch (IOException e) {
-            System.err.println("Error converting the event to JSON: " + e.getMessage());
+        } catch (IOException exception) {
+            System.err.println("Error converting the event to JSON: " + exception.getMessage());
             return null;
         }
     }
@@ -44,8 +49,8 @@ public class TicketmasterEvent {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.registerModule(new JavaTimeModule());
             return objectMapper.readValue(eventJson, TicketmasterEvent.class);
-        } catch (IOException e) {
-            System.err.println("Error deserializing the JSON event: " + e.getMessage());
+        } catch (IOException exception) {
+            System.err.println("Error deserializing the JSON event: " + exception.getMessage());
             return null;
         }
     }
@@ -73,4 +78,7 @@ public class TicketmasterEvent {
 
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
+
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
 }

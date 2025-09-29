@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DatamartCheck {
+public class DatamartInitializationCheck {
     private static final String DB_PATH = "event_datamart.db";
 
     public static Connection getConnection() throws SQLException {

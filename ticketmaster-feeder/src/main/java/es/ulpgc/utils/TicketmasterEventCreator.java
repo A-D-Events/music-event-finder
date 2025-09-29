@@ -15,7 +15,8 @@ public class TicketmasterEventCreator {
                 response.url,
                 response.date,
                 response.venue,
-                response.address
+                response.city,
+                response.image
         );
     }
 }

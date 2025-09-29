@@ -1,12 +1,6 @@
 package es.ulpgc.utils;
 
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -17,6 +11,7 @@ import javax.jms.Topic;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import es.ulpgc.datamart.DatamartStore;
 import es.ulpgc.model.ArtistEvent;
 import es.ulpgc.model.TicketmasterEvent;
 
@@ -47,7 +42,7 @@ public class EventSubscriber {
 
                         ArtistEvent event = ArtistEvent.deserialize(eventJson);
                         if (event != null) {
-                            storeArtistEvent(event);
+                            DatamartStore.saveArtistToDatamart(event);
                         } else {
                             System.err.println("Failed to deserialize ArtistEvent JSON: " + eventJson);
                         }
@@ -67,7 +62,7 @@ public class EventSubscriber {
 
                         TicketmasterEvent event = TicketmasterEvent.deserialize(eventJson);
                         if (event != null) {
-                            storeTicketmasterEvent(event);
+                            DatamartStore.saveEventToDatamart(event);
                         } else {
                             System.err.println("Failed to deserialize TicketmasterEvent JSON: " + eventJson);
                         }
@@ -80,40 +75,6 @@ public class EventSubscriber {
             System.out.println("Subscribed to topics: " + TOPIC_NAME + " and " + TOPIC_NAME_TM);
         } catch (JMSException exception) {
             System.err.println("Error subscribing to topics: " + exception.getMessage());
-        }
-    }
-
-private static void storeArtistEvent(ArtistEvent event) {
-        try {
-            String DB_PATH = "event_datamart.db";
-
-            Files.createDirectories(Paths.get(DB_PATH));
-
-            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(DB_PATH), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                writer.write(event.toJson());
-                writer.newLine();
-            }
-
-            System.out.println("ArtistEvent stored: " + DB_PATH);
-        } catch (IOException exception) {
-            System.err.println("Error storing ArtistEvent: " + exception.getMessage());
-        }
-    }
-
-    private static void storeTicketmasterEvent(TicketmasterEvent event) {
-        try {
-            String DB_PATH = "event_datamart.db";
-
-            Files.createDirectories(Paths.get(DB_PATH));
-
-            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(DB_PATH), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                writer.write(event.toJson());
-                writer.newLine();
-            }
-
-            System.out.println("ArtistEvent stored: " + DB_PATH);
-        } catch (IOException exception) {
-            System.err.println("Error storing ArtistEvent: " + exception.getMessage());
         }
     }
 }

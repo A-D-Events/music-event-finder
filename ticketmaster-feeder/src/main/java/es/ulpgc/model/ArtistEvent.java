@@ -8,14 +8,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class ArtistEvent {
-    private LocalDateTime ts; // Timestamp of the event
-    private String ss;        // Source system (e.g., "spotify-feeder")
-    private String id;        // Artist ID
-    private String name;      // Artist name
-    private int popularity;   // Artist popularity
-    private List<String> genres; // Artist genres
-    private int followers;    // Total followers
-    private String imageUrl;  // URL of the artist's image
+    private LocalDateTime ts;
+    private String ss;
+    private String id;
+    private String name;
+    private int popularity;
+    private List<String> genres;
+    private int followers;
+    private String imageUrl;
 
     public ArtistEvent() {
     }
@@ -31,7 +31,6 @@ public class ArtistEvent {
         this.imageUrl = imageUrl;
     }
 
-    // Serialize the event to JSON
     public String toJson() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -43,7 +42,6 @@ public class ArtistEvent {
         }
     }
 
-    // Deserialize JSON to an ArtistEvent object
     public static ArtistEvent deserialize(String eventJson) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -55,7 +53,6 @@ public class ArtistEvent {
         }
     }
 
-    // Getters and Setters
     public LocalDateTime getTs() {
         return ts;
     }
