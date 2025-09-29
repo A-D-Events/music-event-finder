@@ -1,5 +1,6 @@
 package es.ulpgc;
 
+import es.ulpgc.api.ApiServer;
 import es.ulpgc.datamart.DatamartInitializationCheck;
 import es.ulpgc.datamart.DatamartInitializer;
 import es.ulpgc.utils.EventSubscriber;
@@ -16,5 +17,11 @@ public class Main {
         }
         System.out.println("Starting event subscriber...");
         EventSubscriber.subscribe();
+
+        int port = 8080;
+        System.out.println("Starting API server on port " + port + "...");
+        ApiServer api = new ApiServer(port);
+        api.start();
+        System.out.println("API server started. Endpoints: /health /stats /artists/top /events/top /artists/{id} /events/{id} /artists/search /events/search");
     }
 }

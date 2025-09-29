@@ -25,8 +25,8 @@ public class Main {
                 SpotifyController.updateApi();
 
                 System.out.println("Scheduled task completed successfully.");
-            } catch (Exception e) {
-                System.err.println("Error during scheduled task: " + e.getMessage());
+            } catch (Exception exception) {
+                System.err.println("Error during scheduled task: " + exception.getMessage());
             }
         };
 
